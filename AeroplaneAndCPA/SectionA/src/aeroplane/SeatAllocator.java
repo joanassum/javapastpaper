@@ -26,7 +26,14 @@ public class SeatAllocator {
 	private void allocateInRange(Passenger passenger,
 			Seat first, Seat last) throws AeroplaneFullException {
 
-		// TODO: Section A, Task 4
+		Seat chose = first;
+		while (allocation.containsKey(chose)) {
+			if (chose.equals(last)) {
+				throw new AeroplaneFullException();
+			}
+			chose = chose.next();
+		}
+		allocation.put(chose, passenger);
 
 	}
 
@@ -87,7 +94,9 @@ public class SeatAllocator {
 	private void allocateCrew(BufferedReader br) throws IOException, MalformedDataException, AeroplaneFullException {
 		String firstName = readStringValue(br);
 		String lastName = readStringValue(br);
-		// TODO: Section A, Task 4
+		Passenger passenger = new CrewMember(firstName, lastName);
+		Seat first = new Seat(1,'A');
+		allocateInRange(passenger, first, new Seat(1, first.getMaxSeatLetter()));
 		//       create a crew member using firstName and lastName
 		//       call allocateInRange with appropriate arguments
 	}
@@ -97,7 +106,9 @@ public class SeatAllocator {
 		String lastName = readStringValue(br);
 		int age = readIntValue(br);
 		Luxury luxury = readLuxuryValue(br);
-		// TODO: Section A, Task 4
+		Passenger passenger = new BusinessClass(luxury, firstName, lastName, age);
+		Seat first = new Seat(2,'A');
+		allocateInRange(passenger, first, new Seat(15, first.getMaxSeatLetter()));
 		//       create a business class passenger using firstName, lastName, age and luxury
 		//       call allocateInRange with appropriate arguments
 	}
@@ -106,7 +117,9 @@ public class SeatAllocator {
 		String firstName = readStringValue(br);
 		String lastName = readStringValue(br);
 		int age = readIntValue(br);
-		// TODO: Section A, Task 4
+		Passenger passenger = new EconomyClass(firstName, lastName, age);
+		Seat first = new Seat(16,'A');
+		allocateInRange(passenger, first, new Seat(first.getNoOfRow(), first.getMaxSeatLetter()));
 		//       create an economy class passenger using firstName, lastName and age
 		//       call allocateInRange with appropriate arguments
 	}
