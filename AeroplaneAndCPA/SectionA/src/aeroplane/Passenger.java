@@ -12,5 +12,10 @@ public abstract class Passenger {
 	    this.type = type;
     }
 
+    public boolean isDummy() {
+		return firstName.equals("XXX") && surname.equals("YYY");
+	}
+
+
     abstract boolean isAdult();
 }

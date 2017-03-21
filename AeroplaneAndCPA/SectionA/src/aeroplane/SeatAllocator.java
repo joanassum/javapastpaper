@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class SeatAllocator {
 
@@ -26,14 +27,16 @@ public class SeatAllocator {
 	private void allocateInRange(Passenger passenger,
 			Seat first, Seat last) throws AeroplaneFullException {
 
-		Seat chose = first;
-		while (allocation.containsKey(chose)) {
-			if (chose.equals(last)) {
-				throw new AeroplaneFullException();
+		if (!passenger.isDummy()) {
+			Seat chose = first;
+			while (allocation.containsKey(chose)) {
+				if (chose.equals(last)) {
+					throw new AeroplaneFullException();
+				}
+				chose = chose.next();
 			}
-			chose = chose.next();
+			allocation.put(chose, passenger);
 		}
-		allocation.put(chose, passenger);
 
 	}
 

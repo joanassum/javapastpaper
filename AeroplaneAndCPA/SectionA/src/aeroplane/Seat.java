@@ -70,5 +70,10 @@ public class Seat {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+	    return row * 10 + (letter - 'A');
+    }
+
 
 }
